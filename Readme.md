@@ -6,11 +6,11 @@
 
 # Pivot Grid for WinForms - How to change SummaryDisplayType in the Context Menu
 
-The following example shows how to customize the Number field header's context menu in the [PivotGridControl.PopupMenuShowing](https://docs.devexpress.com/WindowsForms/DevExpress.XtraPivotGrid.PivotGridControl.PopupMenuShowing) event handler. The event allows you to change the Summary Display Type of the field.
+The following example shows how to customize the field header's context menu in the [PivotGridControl.PopupMenuShowing](https://docs.devexpress.com/WindowsForms/DevExpress.XtraPivotGrid.PivotGridControl.PopupMenuShowing) event handler. The event allows you to change the Summary Display Type of the field.
 
 ![custom-context-menu](images/custom-context-menu.png)
 
-Set the [PivotGridFieldOptions.AllowRunTimeSummaryChange](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraPivotGrid.PivotGridFieldOptions.AllowRunTimeSummaryChange) property to true to allow a user to change the data field’s summary type.
+Set the [PivotGridFieldOptions.AllowRunTimeSummaryChange](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraPivotGrid.PivotGridFieldOptions.AllowRunTimeSummaryChange) property to **true** to allow a user to change the data field’s summary type.
 
 <!-- default file list -->
 ## Files to Look at
