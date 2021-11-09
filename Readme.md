@@ -21,6 +21,6 @@ Set the [PivotGridFieldOptions.AllowRunTimeSummaryChange](https://docs.devexpres
 
 ## Documentation 
 - [PivotGridControl.PopupMenuShowing](https://docs.devexpress.com/WindowsForms/DevExpress.XtraPivotGrid.PivotGridControl.PopupMenuShowing)
-- [Header Area Context Menu](https://docs.devexpress.com/WindowsForms/1725/controls-and-libraries/pivot-grid/ui-elements/header-area-context-menu)
+- [Field Header Context Menu](https://docs.devexpress.com/WindowsForms/1726/controls-and-libraries/pivot-grid/ui-elements/field-header-context-menu)
 ## More Examples
 - [Pivot Grid for WinForms - How to Customize the Popup Menu to Hide or Show the Totals](https://github.com/DevExpress-Examples/how-to-toggle-totals-visibility-at-runtime-e923)
