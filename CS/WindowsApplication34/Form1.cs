@@ -9,17 +9,12 @@ using DevExpress.XtraPivotGrid;
 using DevExpress.Data.PivotGrid;
 using DevExpress.Utils.Menu;
 
-namespace WindowsApplication34
-{
-    public partial class Form1 : Form
-    {
-        public Form1()
-        {
+namespace WindowsApplication34 {
+    public partial class Form1 : Form {
+        public Form1() {
             InitializeComponent();
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
+        private void Form1_Load(object sender, EventArgs e) {
             pivotGridControl1.DataSource = CreateTable(20);
             pivotGridControl1.PopupMenuShowing +=new PopupMenuShowingEventHandler(pivotGridControl1_PopupMenuShowing);
 
@@ -36,19 +31,14 @@ namespace WindowsApplication34
 
         }
 
-        void pivotGridControl1_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
-        {         
-            if (e.MenuType == PivotGridMenuType.HeaderSummaries)
-            {
-
-
+        void pivotGridControl1_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e) {         
+            if (e.MenuType == PivotGridMenuType.HeaderSummaries) {
                 DXSubMenuItem sdtItem = new DXSubMenuItem();
                 sdtItem.Caption = "Summary Display Type";
                 e.Menu.Items.Add(sdtItem);
 
                 string curentSummaryDisplayType = Enum.GetName(typeof(PivotSummaryDisplayType), e.Field.SummaryDisplayType);
-                foreach (string str in Enum.GetNames(typeof(PivotSummaryDisplayType)))
-                {
+                foreach (string str in Enum.GetNames(typeof(PivotSummaryDisplayType))) {
                     DXMenuCheckItem item = new DXMenuCheckItem(str, curentSummaryDisplayType == str);
                     item.Click += new EventHandler(ItemClick);
                     item.Tag = e.Field;
@@ -57,16 +47,13 @@ namespace WindowsApplication34
             }                
         }
 
-        void ItemClick(object sender, EventArgs e)
-        {
+        void ItemClick(object sender, EventArgs e) {
             DXMenuItem item = sender as DXMenuItem;
             PivotGridField field = item.Tag as PivotGridField;
             field.SummaryDisplayType = (PivotSummaryDisplayType)Enum.Parse(typeof(PivotSummaryDisplayType), item.Caption);
         }
 
-
-        private DataTable CreateTable(int RowCount)
-        {
+        private DataTable CreateTable(int RowCount) {
             DataTable tbl = new DataTable();
             tbl.Columns.Add("Type", typeof(string));
             tbl.Columns.Add("Product", typeof(string));
