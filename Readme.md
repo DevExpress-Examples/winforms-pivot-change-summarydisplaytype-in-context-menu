@@ -10,6 +10,8 @@
 
 <br/>
 
+![custom-context-menu](images/custom-context-menu.png)
+
 <!-- default file list -->
 ## Files to Look at
 
