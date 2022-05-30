@@ -29,37 +29,64 @@ Namespace WindowsApplication34
 			fieldYear.GroupInterval = PivotGroupInterval.DateYear
 			pivotGridControl1.Fields.AddRange(New PivotGridField() { fieldYear })
 
-			Dim dataField As PivotGridField = pivotGridControl1.Fields.Add("Number", DevExpress.XtraPivotGrid.PivotArea.DataArea)
-			dataField.Options.AllowRunTimeSummaryChange = True
+            Dim dataField As PivotGridField = pivotGridControl1.Fields.AddDataSourceColumn("Number", DevExpress.XtraPivotGrid.PivotArea.DataArea)
+            dataField.Caption = "Number"
+            dataField.Tag = PivotSummaryDisplayType.Default
 
-		End Sub
+        End Sub
 
 		Private Sub pivotGridControl1_PopupMenuShowing(ByVal sender As Object, ByVal e As PopupMenuShowingEventArgs)
-			If e.MenuType = PivotGridMenuType.HeaderSummaries Then
+            If e.MenuType = PivotGridMenuType.Header AndAlso e.HitInfo.HeaderField.Area = PivotArea.DataArea Then
+                Dim sdtItem As New DXSubMenuItem()
+                sdtItem.Caption = "Summary Display Type"
+                e.Menu.Items.Add(sdtItem)
+
+                Dim curentSummaryDisplayType As String = System.Enum.GetName(GetType(PivotSummaryDisplayType), e.Field.Tag)
+                For Each str As String In System.Enum.GetNames(GetType(PivotSummaryDisplayType))
+                    Dim item As New DXMenuCheckItem(str, curentSummaryDisplayType = str)
+                    AddHandler item.Click, AddressOf ItemClick
+                    item.Tag = e.Field
+                    sdtItem.Items.Add(item)
+                Next str
+            End If
+        End Sub
+
+        Private Sub ItemClick(ByVal sender As Object, ByVal e As EventArgs)
+            Dim item As DXMenuItem = TryCast(sender, DXMenuItem)
+            Dim field As PivotGridField = TryCast(item.Tag, PivotGridField)
+            Dim sourceBinding As New DataSourceColumnBinding("Number")
+            Dim newValue As PivotSummaryDisplayType = DirectCast(System.Enum.Parse(GetType(PivotSummaryDisplayType), item.Caption), PivotSummaryDisplayType)
+            Select Case newValue
+                Case PivotSummaryDisplayType.AbsoluteVariation
+                    field.DataBinding = New DifferenceBinding(sourceBinding, CalculationPartitioningCriteria.RowValue, CalculationDirection.DownThenAcross, DifferenceTarget.Previous, DifferenceType.Absolute)
+                Case PivotSummaryDisplayType.PercentVariation
+                    field.DataBinding = New DifferenceBinding(sourceBinding, CalculationPartitioningCriteria.RowValue, CalculationDirection.DownThenAcross, DifferenceTarget.Previous, DifferenceType.Percentage)
+                Case PivotSummaryDisplayType.PercentOfColumn
+                    field.DataBinding = New PercentOfTotalBinding(sourceBinding, CalculationPartitioningCriteria.ColumnValueAndRowParentValue)
+                Case PivotSummaryDisplayType.PercentOfRow
+                    field.DataBinding = New PercentOfTotalBinding(sourceBinding, CalculationPartitioningCriteria.RowValueAndColumnParentValue)
+                Case PivotSummaryDisplayType.PercentOfColumnGrandTotal
+                    field.DataBinding = New PercentOfTotalBinding(sourceBinding, CalculationPartitioningCriteria.ColumnValue)
+                Case PivotSummaryDisplayType.PercentOfRowGrandTotal
+                    field.DataBinding = New PercentOfTotalBinding(sourceBinding, CalculationPartitioningCriteria.RowValue)
+                Case PivotSummaryDisplayType.PercentOfGrandTotal
+                    field.DataBinding = New PercentOfTotalBinding(sourceBinding, CalculationPartitioningCriteria.None)
+                Case PivotSummaryDisplayType.RankInColumnLargestToSmallest
+                    field.DataBinding = New RankBinding(sourceBinding, CalculationPartitioningCriteria.ColumnValue, RankType.Dense, PivotSortOrder.Descending)
+                Case PivotSummaryDisplayType.RankInColumnSmallestToLargest
+                    field.DataBinding = New RankBinding(sourceBinding, CalculationPartitioningCriteria.ColumnValue, RankType.Dense, PivotSortOrder.Ascending)
+                Case PivotSummaryDisplayType.RankInRowLargestToSmallest
+                    field.DataBinding = New RankBinding(sourceBinding, CalculationPartitioningCriteria.RowValue, RankType.Dense, PivotSortOrder.Descending)
+                Case PivotSummaryDisplayType.RankInRowSmallestToLargest
+                    field.DataBinding = New RankBinding(sourceBinding, CalculationPartitioningCriteria.ColumnValue, RankType.Dense, PivotSortOrder.Ascending)
+                Case Else
+                    field.DataBinding = sourceBinding
+            End Select
+            field.Tag = newValue
+        End Sub
 
 
-				Dim sdtItem As New DXSubMenuItem()
-				sdtItem.Caption = "Summary Display Type"
-				e.Menu.Items.Add(sdtItem)
-
-				Dim curentSummaryDisplayType As String = System.Enum.GetName(GetType(PivotSummaryDisplayType), e.Field.SummaryDisplayType)
-				For Each str As String In System.Enum.GetNames(GetType(PivotSummaryDisplayType))
-					Dim item As New DXMenuCheckItem(str, curentSummaryDisplayType = str)
-					AddHandler item.Click, AddressOf ItemClick
-					item.Tag = e.Field
-					sdtItem.Items.Add(item)
-				Next str
-			End If
-		End Sub
-
-		Private Sub ItemClick(ByVal sender As Object, ByVal e As EventArgs)
-			Dim item As DXMenuItem = TryCast(sender, DXMenuItem)
-			Dim field As PivotGridField = TryCast(item.Tag, PivotGridField)
-			field.SummaryDisplayType = CType(System.Enum.Parse(GetType(PivotSummaryDisplayType), item.Caption), PivotSummaryDisplayType)
-		End Sub
-
-
-		Private Function CreateTable(ByVal RowCount As Integer) As DataTable
+        Private Function CreateTable(ByVal RowCount As Integer) As DataTable
 			Dim tbl As New DataTable()
 			tbl.Columns.Add("Type", GetType(String))
 			tbl.Columns.Add("Product", GetType(String))
