@@ -6,7 +6,7 @@
 
 # Pivot Grid for WinForms - How to Change SummaryDisplayType in the Context Menu
 
-The following example shows how to customize the field header's context menu in the [PivotGridControl.PopupMenuShowing](https://docs.devexpress.com/WindowsForms/DevExpress.XtraPivotGrid.PivotGridControl.PopupMenuShowing) event handler. The event adds a new item to the _Number_ field header's context menu and allows you to change the [SummaryDisplayType](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraPivotGrid.PivotGridFieldBase.SummaryDisplayType) value.
+The following example shows how to customize the field header's context menu in the [PivotGridControl.PopupMenuShowing](https://docs.devexpress.com/WindowsForms/DevExpress.XtraPivotGrid.PivotGridControl.PopupMenuShowing) event handler. The event adds a new item to the _Number_ field header's context menu and allows you to change the [SummaryDisplayType](https://docs.devexpress.com/WindowsForms/1935/controls-and-libraries/pivot-grid/data-shaping/summarization/summaries/summary-display-modes) value.
 
 ![custom-context-menu](images/custom-context-menu.png)
 
