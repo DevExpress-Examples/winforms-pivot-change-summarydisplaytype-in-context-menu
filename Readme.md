@@ -13,7 +13,7 @@ The following example shows how to customize the field header's context menu in 
 Set the [PivotGridFieldOptions.AllowRunTimeSummaryChange](https://docs.devexpress.com/CoreLibraries/DevExpress.XtraPivotGrid.PivotGridFieldOptions.AllowRunTimeSummaryChange) property to **true** to allow users to change the data field’s summary type.
 
 <!-- default file list -->
-## Files to Look at
+## Files to Review
 
 * [Form1.cs](./CS/WindowsApplication34/Form1.cs) (VB: [Form1.vb](./VB/WindowsApplication34/Form1.vb))
 * [Program.cs](./CS/WindowsApplication34/Program.cs) (VB: [Program.vb](./VB/WindowsApplication34/Program.vb))
